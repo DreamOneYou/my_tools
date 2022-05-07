@@ -20,20 +20,8 @@ class AttrDict(dict):
             self.__dict__[name] = value
         else:
             self[name] = value
-
     def __str__(self):
         return yaml.dump(self.strip(), default_flow_style=False)
-
-    def merge(self, other):
-        if not isinstance(other, AttrDict):
-            other = AttrDict.cast(other)
-
-        for k, v in other.items():
-            v = copy.deepcopy(v)
-            if k not in self or not isinstance(v, dict):
-                self[k] = v
-                continue
-            AttrDict.__dict__['merge'](self[k], v)
 
     def strip(self):
         if not isinstance(self, dict):
@@ -62,7 +50,7 @@ def parse(d):
         return d
     return AttrDict({k: parse(v) for k, v in d.items()})
 
-path = r"/reamYaml\config.yaml"
+path = r"C:\Users\wpx\Desktop\TractSeg\config\config.yaml"
 
 if __name__ == "__main__":
     with open(path, 'r') as f:
